@@ -38,13 +38,16 @@ export default function ContactMe(props) {
   const submitForm = async (e)=> {
       e.preventDefault();
       try {
-        let data = {
-            name,
-            email,
-            message,
-        };
+        let data = JSON.stringify({
+          name,
+          email,
+          message,
+        });
+        const config = {
+          headers:  {"Content-Type": "application/json"},
+        }
         setBool(true)
-        const res = await axios.post(`/contact`, data)
+        const res = await axios.post(`https://portfolionodefiles.herokuapp.com/contact`, data, config)
         if(name.length === 0 || email.length === 0 ||message.length === 0){
             setBanner(res.data.msg)
             toast.error(res.data.msg)
